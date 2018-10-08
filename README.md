@@ -1,0 +1,2 @@
+# pyops
+OpenSearch python client
