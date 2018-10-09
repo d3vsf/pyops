@@ -1,4 +1,4 @@
-pyops: OpenSearch made easy
+pyops: OpenSearch made pythonically easy
 ===========================
 
 OpenSearch python client.
