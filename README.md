@@ -52,4 +52,6 @@ python3 setup.py sdist bdist_wheel
 twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 # test install
 python3 -m pip install --index-url https://test.pypi.org/simple/ pyops
+# upload on pypi
+twine upload dist/*
 ```
