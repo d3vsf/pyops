@@ -5,15 +5,20 @@ OpenSearch python client.
 
 Examples:
 ```python
-# simple example
 >>> import pyops
->>> client = pyops.Client(repository_desx="https://example.org")
+>>> client = pyops.Client(description_xml_url="https://example.org")
+
+# simple search
 >>> raw_results = client.search()
+
+# authenticated search
+>>> raw_results = client.search(auth=('username', 'password'))
 
 # advanced search
 >>> raw_results = client.search(params={"{eop:instrument?}": {"value": "SAR"}})
 
-# advandced results filtering
+# results filtering
+>>> raw_results = client.search()
 >>> entry_fields = client.get_available_fields()
 >>>  filtered_results = client.filter_entries([{
 >>>     "tag": "{http://www.w3.org/2005/Atom}id",
@@ -40,6 +45,7 @@ Examples:
 TODO
 ----
 - APIs (search, ...)
+- json search
 - documentation
 
 [HOW TO] DEPLOY
@@ -55,3 +61,12 @@ python3 -m pip install --index-url https://test.pypi.org/simple/ pyops
 # upload on pypi
 twine upload dist/*
 ```
+
+CHANGELOG
+---------
+
+* v0.0.2 (2019-07-16):
+  * Added: authentication management
+  * Bugfix: removed unused parameters from search (added regex)
+  * Tests: added test_authentication (description_xml_url and authentication params not committed)
+  * Issue #1: included tests in packaging

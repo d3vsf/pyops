@@ -82,6 +82,12 @@ class OpsTest(unittest.TestCase):
         self.assertIsInstance(raw_results, list)
         self.assertTrue(len(raw_results) > 0)
 
+    #def test_authentication(self):
+    #    client = pyops.Client(description_xml_url="")
+    #    raw_results = client.search(auth=('', ''))
+    #    self.assertIsInstance(raw_results, list)
+    #    self.assertTrue(len(raw_results) > 0)
+
 
 if __name__ == "__main__":
     # unittest.main()

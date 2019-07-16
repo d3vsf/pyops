@@ -34,7 +34,7 @@ class Client(object):
     Usage::
 
         >>> import pyops
-        >>> client = pyops.Client(repository_desx="https://example.org")
+        >>> client = pyops.Client(description_xml_url="https://example.org")
         >>> raw_results = client.search()
     '''
 
@@ -262,7 +262,7 @@ class Client(object):
                 node_list_out.append(node_out)
             return node_list_out
 
-    def search(self, force_HTTPS=True, params={}):
+    def search(self, force_HTTPS=True, params={}, auth=()):
         """Does an OpenSearch call to the Search URL Template replacing the Search URL Template params with the given ones.
 
         :param force_HTTPS: forces the connection to be HTTPS.
@@ -317,7 +317,18 @@ class Client(object):
             if (-1 == qm_indx) or (qm_indx > and_indx):
                 self.search_url = self.search_url.replace('&', '?', 1)
 
-            r = requests.get(self.search_url)
+            # remove unset parameters
+            self.search_url = re.sub('[\?&/]\w*=*\{\w+:*\w+\?*\}*', '', self.search_url)
+            self.search_url = re.sub(
+                '((\s?AND\s)\w*:*\{\w+:*\w+\??\}*)|((\s?AND\s)\w+:\[\{\w+:\w+\??\}\sTO\s\{\w+:\w+\??\}\])|((\s?AND\s)?\w+:(%22|")\w+\(\{\w+:*\w+\??\}*\)(%22|"))', '', self.search_url)
+            print(self.search_url)
+
+            if auth and isinstance(auth, tuple) and 2 == len(auth):
+                print(self.search_url)
+                print(auth)
+                r = requests.get(self.search_url, auth=auth)
+            else:
+                r = requests.get(self.search_url)
             self.content_node = eltree.fromstring(r.content)
             if 200 != r.status_code:
                 msg = 'Endpoint returned: %d - %s' % (r.status_code, r.reason)
