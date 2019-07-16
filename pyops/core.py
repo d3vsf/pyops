@@ -319,13 +319,9 @@ class Client(object):
 
             # remove unset parameters
             self.search_url = re.sub('[\?&/]\w*=*\{\w+:*\w+\?*\}*', '', self.search_url)
-            self.search_url = re.sub(
-                '((\s?AND\s)\w*:*\{\w+:*\w+\??\}*)|((\s?AND\s)\w+:\[\{\w+:\w+\??\}\sTO\s\{\w+:\w+\??\}\])|((\s?AND\s)?\w+:(%22|")\w+\(\{\w+:*\w+\??\}*\)(%22|"))', '', self.search_url)
-            print(self.search_url)
+            self.search_url = re.sub('((\s?AND\s)\w*:*\{\w+:*\w+\??\}*)|((\s?AND\s)\w+:\[\{\w+:\w+\??\}\sTO\s\{\w+:\w+\??\}\])|((\s?AND\s)?\w+:(%22|")\w+\(\{\w+:*\w+\??\}*\)(%22|"))', '', self.search_url)
 
             if auth and isinstance(auth, tuple) and 2 == len(auth):
-                print(self.search_url)
-                print(auth)
                 r = requests.get(self.search_url, auth=auth)
             else:
                 r = requests.get(self.search_url)
